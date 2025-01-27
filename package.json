@@ -12,6 +12,10 @@
     "@astrojs/mdx": "^4.0.7",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "astro": "^5.1.9"
+    "@notionhq/client": "^2.2.15",
+    "astro": "^5.1.9",
+    "dotenv": "^16.4.7",
+    "marked": "^15.0.6",
+    "notion-to-md": "^3.1.4"
   }
 }

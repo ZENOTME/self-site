@@ -4,55 +4,77 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
-import BlogItem from "../components/BlogItem.astro";
+import { getAllPublishedNotionBlogItem } from "../notion";
+import FormattedDate from "../components/FormattedDate.astro";
 
 const { tag } = Astro.params;
 
 let posts = (await getCollection("blog")).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
+let notion_posts = await getAllPublishedNotionBlogItem();
+
 if (tag) {
-	posts = posts.filter((x) => x.data.tags?.map((t) => t.toLowerCase()).includes(tag));
+    posts = posts.filter((x) =>
+        x.data.tags?.map((t) => t.toLowerCase()).includes(tag),
+    );
+    notion_posts = notion_posts.filter((x) =>
+        x.tags?.map((t) => t.toLowerCase()).includes(tag),
+    );
 }
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			ul {
-				list-style-type: none;
-				padding: unset;
-			}
-			ul li {
-				display: flex;
-			}
-			ul li :global(time) {
-				flex: 0 0 130px;
-				font-style: italic;
-				color: #595959;
-			}
-			ul li a:visited {
-				color: #8e32dc;
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		{tag && <h2>{tag}</h2>}
-		<main>
-            <p style="margin-bottom: 3em" />
-			<section>
-				<ul>
-					{
-						posts
-							.map((post) => <BlogItem post={post} />)
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+        <style>
+            ul {
+                list-style-type: none;
+                padding: unset;
+            }
+            ul li {
+                display: flex;
+            }
+            ul li :global(time) {
+                flex: 0 0 130px;
+                /* font-style: italic; */
+                color: #595959;
+            }
+            ul li a:visited {
+                color: #8e32dc;
+            }
+        </style>
+    </head>
+    <body>
+        <Header />
+        {tag && <h2>{tag}</h2>}
+        <main>
+            <p style="margin-bottom: 3em"></p>
+            <section>
+                <ul>
+                    {
+                        notion_posts.map((post) => (
+                            <li>
+                                <FormattedDate date={post.pubDate} />
+                                <a href={`/notion_blog/${post.page_id}/`}>{post.title}</a>
+                            </li>
+                        ))
+                    }
+                    {
+                        posts.map((post) => (
+                            <li>
+                                <FormattedDate date={post.data.pubDate} />
+                                <a href={`/blog/${post.slug}/`}>
+                                    {post.data.title}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </section>
+        </main>
+        <Footer />
+    </body>
 </html>

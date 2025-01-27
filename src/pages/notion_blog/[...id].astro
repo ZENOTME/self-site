@@ -1,0 +1,32 @@
+---
+import { getNotionPage, getNotionPageContent } from "../../notion";
+import type {
+	PageObjectResponse,
+	RichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints";
+import NotionBlogPost from "../../layouts/NotionBlogPost.astro";
+
+export const prerender = false;
+
+const { id } = Astro.params;
+
+let page: PageObjectResponse = (await getNotionPage(
+	id as string,
+)) as PageObjectResponse;
+let content = await getNotionPageContent(id as string);
+const title = (
+	page.properties["title"] as {
+		type: "title";
+		title: Array<RichTextItemResponse>;
+		id: string;
+	}
+).title[0].plain_text;
+let create_date: Date | null = null;
+if (page.properties["date"].type == "date") {
+	create_date = new Date(page.properties["date"].date?.start as string);
+}
+---
+
+<NotionBlogPost title={title} description="" pubDate={create_date}>
+	<article set:html={content} />
+</NotionBlogPost>
