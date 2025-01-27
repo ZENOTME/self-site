@@ -65,7 +65,7 @@ blockquote {
 	color: #222;
 	padding: 2px 0px 2px 20px;
 	margin: 0px;
-	font-style: italic;
+	font-style: normal;
 }
 
 .img-border {
@@ -89,4 +89,58 @@ blockquote {
 .table-container th {
 	padding-left: 1em;
 	padding-right: 1em;
+}
+
+@media screen and (max-width: 768px) {
+	body {
+		padding: 15px;
+		max-width: 100%;
+		font-size: 14px;
+	}
+	
+	h1 {
+		font-size: 1.8rem;
+	}
+	
+	h2 {
+		font-size: 1.6rem;
+	}
+
+    blockquote {
+		padding: 0.8rem;
+		font-size: 14px;
+		overflow-x: auto;  /* 添加横向滚动 */
+		white-space: normal;  /* 允许换行 */
+		word-wrap: break-word;  /* 允许长单词换行 */
+		transform-origin: top left;  /* 设置缩放基准点 */
+		transform: scale(0.9);  /* 整体缩小10% */
+		border-left: 4px solid #ddd;  /* 添加左侧边框 */
+		margin: 1rem 0;  /* 添加上下边距 */
+		background-color: #f9f9f9;  /* 添加背景色 */
+	}
+	
+	pre {
+		padding: 0.8rem;
+		font-size: 14px;
+		overflow-x: auto;  /* 添加横向滚动 */
+		white-space: pre;  /* 禁止代码换行 */
+		word-wrap: normal;  /* 禁止长单词换行 */
+		transform-origin: top left;  /* 设置缩放基准点 */
+		transform: scale(0.9);  /* 整体缩小10% */
+	}
+	
+	code {
+		font-size: 13px;  /* 调小代码字体 */
+		line-height: 1.4;  /* 调整行高 */
+	}
+	
+	.table-container {
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+	
+	nav a {
+		margin-right: 8px;
+		font-size: 14px;
+	}
 }
