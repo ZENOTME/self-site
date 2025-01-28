@@ -25,8 +25,27 @@ let create_date: Date | null = null;
 if (page.properties["date"].type == "date") {
 	create_date = new Date(page.properties["date"].date?.start as string);
 }
+let hero_image: string | null = null;
+if (
+	"featured image" in page.properties &&
+	page.properties["featured image"].type == "files" &&
+	page.properties["featured image"].files?.length > 0 &&
+	page.properties["featured image"].files[0].type == "file" && 
+	page.properties["featured image"].files[0].file.url
+) {
+	const imageUrl = page.properties["featured image"].files[0].file.url;
+	// 下载图片并转换为base64
+	const response = await fetch(imageUrl);
+	const buffer = await response.arrayBuffer();
+	hero_image = `data:${response.headers.get('content-type')};base64,${Buffer.from(buffer).toString('base64')}`;
+}
 ---
 
-<NotionBlogPost title={title} description="" pubDate={create_date}>
+<NotionBlogPost
+	title={title}
+	description=""
+	pubDate={create_date}
+	heroImage={hero_image}
+>
 	<article set:html={content} />
 </NotionBlogPost>

@@ -1,6 +1,7 @@
 import { Client } from "@notionhq/client";
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
-const databaseId = process.env.NOTION_DATABASE_ID;
+export const databaseId_tech = 'a410d9bb9cc14df58a703e73bc03151b';
+export const databaseId_life = '188883f79f1e80958e2be2e2336455c3';
 import { NotionToMarkdown } from "notion-to-md";
 import { marked } from "marked";
 
@@ -13,7 +14,7 @@ export type notion_blog_item = {
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
 
-export async function getAllPublishedNotionBlogItem(): Promise<notion_blog_item[]> {
+export async function getAllPublishedNotionBlogItem(databaseId: string): Promise<notion_blog_item[]> {
   try {
     const response = await notion.databases.query({
       database_id: databaseId as string,

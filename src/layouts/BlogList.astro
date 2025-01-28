@@ -4,7 +4,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
-import { getAllPublishedNotionBlogItem } from "../notion";
+import {
+    getAllPublishedNotionBlogItem,
+    databaseId_tech,
+    databaseId_life,
+} from "../notion";
 import FormattedDate from "../components/FormattedDate.astro";
 
 const { tag } = Astro.params;
@@ -13,13 +17,17 @@ let posts = (await getCollection("blog")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-let notion_posts = await getAllPublishedNotionBlogItem();
+let notion_posts = await getAllPublishedNotionBlogItem(databaseId_tech);
+let notion_posts_life = await getAllPublishedNotionBlogItem(databaseId_life);
 
 if (tag) {
     posts = posts.filter((x) =>
         x.data.tags?.map((t) => t.toLowerCase()).includes(tag),
     );
     notion_posts = notion_posts.filter((x) =>
+        x.tags?.map((t) => t.toLowerCase()).includes(tag),
+    );
+    notion_posts_life = notion_posts_life.filter((x) =>
         x.tags?.map((t) => t.toLowerCase()).includes(tag),
     );
 }
@@ -58,7 +66,9 @@ if (tag) {
                         notion_posts.map((post) => (
                             <li>
                                 <FormattedDate date={post.pubDate} />
-                                <a href={`/notion_blog/${post.page_id}/`}>{post.title}</a>
+                                <a href={`/notion_blog/${post.page_id}/`}>
+                                    {post.title}
+                                </a>
                             </li>
                         ))
                     }
@@ -68,6 +78,21 @@ if (tag) {
                                 <FormattedDate date={post.data.pubDate} />
                                 <a href={`/blog/${post.slug}/`}>
                                     {post.data.title}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </section>
+            <section>
+                Blog for life
+                <ul>
+                    {
+                        notion_posts_life.map((post) => (
+                            <li>
+                                <FormattedDate date={post.pubDate} />
+                                <a href={`/notion_blog/${post.page_id}/`}>
+                                    {post.title}
                                 </a>
                             </li>
                         ))
