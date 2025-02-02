@@ -1,0 +1,9 @@
+---
+export const prerender = false;
+
+const { tag } = Astro.params;
+
+import BlogList from "../../layouts/BlogList.astro";
+---
+
+<BlogList tag={tag} />

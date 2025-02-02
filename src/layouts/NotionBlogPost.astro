@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-const { title, description, pubDate, heroImage} = Astro.props;
+const { title, description, pubDate, heroImage, tags} = Astro.props;
 ---
 
 <html lang="en">
@@ -70,6 +70,16 @@ const { title, description, pubDate, heroImage} = Astro.props;
 				</div>
 			</article>
 		</main>
+		<div style={{ marginTop: "1em" }}>
+			{
+				tags &&
+					tags.map((tag) => (
+						<small style={{ marginRight: "0.5em" }}>
+							<a href={`/tags/${tag.toLowerCase()}/`}>#{tag}</a>
+						</small>
+					))
+			}
+		</div>
 		<Footer />
 	</body>
 </html>

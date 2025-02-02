@@ -7,7 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
 ---
 
 <html lang="en">
@@ -80,6 +80,16 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				</div>
 			</article>
 		</main>
+		<div style={{ marginTop: "1em" }}>
+			{
+				tags &&
+					tags.map((tag) => (
+						<small style={{ marginRight: "0.5em" }}>
+							<a href={`/tags/${tag.toLowerCase()}/`}>#{tag}</a>
+						</small>
+					))
+			}
+		</div>
 		<Footer />
 	</body>
 </html>

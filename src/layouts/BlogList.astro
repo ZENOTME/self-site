@@ -85,19 +85,23 @@ if (tag) {
                 </ul>
             </section>
             <section>
-                Blog for life
-                <ul>
-                    {
-                        notion_posts_life.map((post) => (
-                            <li>
-                                <FormattedDate date={post.pubDate} />
-                                <a href={`/notion_blog/${post.page_id}/`}>
-                                    {post.title}
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ul>
+                {
+                    notion_posts_life.length > 0 && <>
+                        <h4>Blog for life</h4>
+                        <ul>
+                            {
+                                notion_posts_life.map((post) => (
+                                    <li>
+                                        <FormattedDate date={post.pubDate} />
+                                        <a href={`/notion_blog/${post.page_id}/`}>
+                                            {post.title}
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </>
+                }
             </section>
         </main>
         <Footer />
