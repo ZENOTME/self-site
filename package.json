@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run fonts:subset",
+    "fonts:subset": "node scripts/subset-noto-serif-sc.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -17,6 +18,7 @@
     "astro": "^5.1.9",
     "dotenv": "^16.4.7",
     "marked": "^15.0.6",
-    "notion-to-md": "^3.1.4"
+    "notion-to-md": "^3.1.4",
+    "subset-font": "2.5.0"
   }
 }

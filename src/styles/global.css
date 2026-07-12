@@ -11,8 +11,24 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "Noto Serif SC";
+    src: url("/fonts/noto-serif-sc-regular.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Noto Serif SC";
+    src: url("/fonts/noto-serif-sc-bold.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
 body {
-    font-family: "Monaspace Neon", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-monospace, monospace;
+    font-family: "Monaspace Neon", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-monospace, monospace;
     margin: auto;
     padding: 20px;
     max-width: 78ch;
