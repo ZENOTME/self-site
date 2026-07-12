@@ -32,18 +32,6 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <link rel="preload" href="/fonts/monaspace-neon-regular.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/monaspace-neon-bold.woff2" as="font" type="font/woff2" crossorigin />
 
-<script is:inline>
-	const root = document.documentElement;
-	root.classList.add('fonts-loading');
-
-	const fontLoads = [
-		document.fonts.load('400 16px "Monaspace Neon"'),
-		document.fonts.load('700 16px "Monaspace Neon"'),
-	];
-
-	Promise.all(fontLoads).finally(() => root.classList.remove('fonts-loading'));
-</script>
-
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 

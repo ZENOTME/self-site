@@ -8,7 +8,7 @@
     src: url("/fonts/monaspace-neon-regular.woff2") format("woff2");
     font-style: normal;
     font-weight: 400;
-    font-display: block;
+    font-display: optional;
 }
 
 @font-face {
@@ -16,15 +16,11 @@
     src: url("/fonts/monaspace-neon-bold.woff2") format("woff2");
     font-style: normal;
     font-weight: 700;
-    font-display: block;
-}
-
-html.fonts-loading body {
-    visibility: hidden;
+    font-display: optional;
 }
 
 body {
-    font-family: "Monaspace Neon", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
+    font-family: "Monaspace Neon", ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
     margin: auto;
     padding: 20px;
     max-width: 78ch;
