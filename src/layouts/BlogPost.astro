@@ -6,7 +6,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, showHeader = true } = Astro.props;
 ---
 
 <html lang="en">
@@ -28,11 +28,16 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 				box-shadow: var(--box-shadow);
 			}
 			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
+				box-sizing: border-box;
+				width: 100%;
 				margin: auto;
 				padding: 1em;
 				color: rgb(var(--gray-dark));
+			}
+			.prose :global(p),
+			.prose :global(li),
+			.prose :global(blockquote) {
+				letter-spacing: 0.025em;
 			}
 			.title {
 				margin-bottom: 1em;
@@ -61,20 +66,24 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
 				</div>
 				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
+					{
+						showHeader && (
+							<div class="title">
+								<div class="date">
+									<FormattedDate date={pubDate} />
+									{
+										updatedDate && (
+											<div class="last-updated-on">
+												Last updated on <FormattedDate date={updatedDate} />
+											</div>
+										)
+									}
+								</div>
+								<h1>{title}</h1>
+								<hr />
+							</div>
+						)
+					}
 					<slot />
 				</div>
 			</article>

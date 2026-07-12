@@ -1,13 +1,21 @@
 /*
   The CSS in this style tag is based off of Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
+ License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
+@font-face {
+    font-family: "Monaspace Neon";
+    src: url("/fonts/monaspace-neon.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: swap;
+}
+
 body {
-    font-family: Verdana, sans-serif;
+    font-family: "Monaspace Neon", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-monospace, monospace;
     margin: auto;
     padding: 20px;
-    max-width: 65ch;
+    max-width: 78ch;
     text-align: left;
     background-color: #fff;
     word-wrap: break-word;

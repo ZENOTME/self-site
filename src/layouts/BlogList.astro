@@ -16,8 +16,10 @@ let posts = (await getCollection("blog")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-let notion_posts = await getAllPublishedNotionBlogItem(databaseId_tech);
-let notion_posts_life = await getAllPublishedNotionBlogItem(databaseId_life);
+let [notion_posts, notion_posts_life] = await Promise.all([
+    getAllPublishedNotionBlogItem(databaseId_tech),
+    getAllPublishedNotionBlogItem(databaseId_life),
+]);
 
 if (tag) {
     posts = posts.filter((x) =>
@@ -41,16 +43,17 @@ if (tag) {
                 list-style-type: none;
                 padding: unset;
             }
+            main {
+                margin-top: 1rem;
+            }
             ul li {
                 display: flex;
+                margin-bottom: 0.45rem;
             }
             ul li :global(time) {
                 flex: 0 0 130px;
                 /* font-style: italic; */
                 color: #595959;
-            }
-            ul li a:visited {
-                color: #8e32dc;
             }
         </style>
     </head>
@@ -58,7 +61,6 @@ if (tag) {
         <Header />
         {tag && <h2>{tag}</h2>}
         <main>
-            <p style="margin-bottom: 3em"></p>
             <section>
                 <ul>
                     {
