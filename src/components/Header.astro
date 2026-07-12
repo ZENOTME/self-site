@@ -56,29 +56,31 @@ import HeaderLink from './HeaderLink.astro';
 </header>
 <style>
 	header {
-		margin: 0;
+		margin: 0 0 0.5rem;
 		padding: 0 1em;
 		background: white;
 		box-shadow: 0 2px 8px rgba(var(--black), 5%);
 	}
 	h2 {
+		display: flex;
 		margin: 0;
 		font-size: 1.45rem;
-		transform: translate(-1.5rem, 2px);
+		transform: translateX(-1.5rem);
 	}
 
 	h2 a,
 	h2 a.active {
+		display: flex;
 		text-decoration: none;
 		padding-left: 0;
 	}
 	nav {
 		display: flex;
-		align-items: center;
+		align-items: flex-end;
 		justify-content: space-between;
 	}
 	nav a {
-		padding: 1.05em 0.5em;
+		padding: 1rem 0.5em;
 		color: var(--black);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
