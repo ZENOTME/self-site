@@ -13,8 +13,21 @@ export type notion_blog_item = {
 };
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
+const publishedPostsCache = new Map<string, Promise<notion_blog_item[]>>();
 
-export async function getAllPublishedNotionBlogItem(databaseId: string): Promise<notion_blog_item[]> {
+export function getAllPublishedNotionBlogItem(databaseId: string): Promise<notion_blog_item[]> {
+  const cachedPosts = publishedPostsCache.get(databaseId);
+  if (cachedPosts) {
+    return cachedPosts;
+  }
+
+  const request = fetchPublishedNotionBlogItems(databaseId);
+  publishedPostsCache.set(databaseId, request);
+  request.catch(() => publishedPostsCache.delete(databaseId));
+  return request;
+}
+
+async function fetchPublishedNotionBlogItems(databaseId: string): Promise<notion_blog_item[]> {
   try {
     const response = await notion.databases.query({
       database_id: databaseId as string,

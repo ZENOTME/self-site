@@ -1,19 +1,35 @@
 ---
-import { getNotionPage, getNotionPageContent } from "../../notion";
+import {
+	databaseId_life,
+	databaseId_tech,
+	getAllPublishedNotionBlogItem,
+	getNotionPage,
+	getNotionPageContent,
+} from "../../notion";
 import type {
 	PageObjectResponse,
 	RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import NotionBlogPost from "../../layouts/NotionBlogPost.astro";
 
-export const prerender = false;
+export async function getStaticPaths() {
+	const [techPosts, lifePosts] = await Promise.all([
+		getAllPublishedNotionBlogItem(databaseId_tech),
+		getAllPublishedNotionBlogItem(databaseId_life),
+	]);
+
+	return [...techPosts, ...lifePosts].map((post) => ({
+		params: { id: post.page_id },
+	}));
+}
 
 const { id } = Astro.params;
 
-let page: PageObjectResponse = (await getNotionPage(
-	id as string,
-)) as PageObjectResponse;
-let content = await getNotionPageContent(id as string);
+const [pageResponse, content] = await Promise.all([
+	getNotionPage(id as string),
+	getNotionPageContent(id as string),
+]);
+let page: PageObjectResponse = pageResponse as PageObjectResponse;
 const title = (
 	page.properties["title"] as {
 		type: "title";

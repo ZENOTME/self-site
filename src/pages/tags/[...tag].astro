@@ -1,9 +1,31 @@
 ---
-export const prerender = false;
+import { getCollection } from "astro:content";
+import {
+	databaseId_life,
+	databaseId_tech,
+	getAllPublishedNotionBlogItem,
+} from "../../notion";
+import BlogList from "../../layouts/BlogList.astro";
+
+export async function getStaticPaths() {
+	const [localPosts, techPosts, lifePosts] = await Promise.all([
+		getCollection("blog"),
+		getAllPublishedNotionBlogItem(databaseId_tech),
+		getAllPublishedNotionBlogItem(databaseId_life),
+	]);
+	const tags = new Set<string>();
+
+	for (const post of localPosts) {
+		post.data.tags?.forEach((tag) => tags.add(tag.toLowerCase()));
+	}
+	for (const post of [...techPosts, ...lifePosts]) {
+		post.tags.forEach((tag) => tags.add(tag.toLowerCase()));
+	}
+
+	return [...tags].map((tag) => ({ params: { tag } }));
+}
 
 const { tag } = Astro.params;
-
-import BlogList from "../../layouts/BlogList.astro";
 ---
 
 <BlogList tag={tag} />
