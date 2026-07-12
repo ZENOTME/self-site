@@ -37,7 +37,12 @@ h2,
 h3,
 h4,
 h5,
-h6,
+h6 {
+    color: #222;
+    font-family: "Monaspace Neon", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    font-weight: 700;
+}
+
 strong,
 b {
     color: #222;
@@ -79,13 +84,20 @@ code {
 }
 
 pre {
-    padding: 1rem;
-    border: 1px solid #eee;
-    border-radius: 5px;
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.5rem;
+    background-color: #f8f8f7;
+    border: 0;
+    border-radius: 14px;
 }
 
 pre>code {
     all: unset;
+}
+
+pre strong,
+pre b {
+    color: inherit;
 }
 
 blockquote {
@@ -141,18 +153,13 @@ blockquote {
 }
 
 pre {
-    padding: 0.8rem;
-    font-size: 14px;
+    font-size: 0.95rem;
     overflow-x: auto;
     /* 添加横向滚动 */
     white-space: pre;
     /* 禁止代码换行 */
     word-wrap: normal;
     /* 禁止长单词换行 */
-    transform-origin: top left;
-    /* 设置缩放基准点 */
-    transform: scale(0.9);
-    /* 整体缩小10% */
 }
 
 code {
