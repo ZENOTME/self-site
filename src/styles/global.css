@@ -19,28 +19,12 @@
     font-display: block;
 }
 
-@font-face {
-    font-family: "Noto Serif SC";
-    src: url("/fonts/noto-serif-sc-regular.woff2") format("woff2");
-    font-style: normal;
-    font-weight: 400;
-    font-display: block;
-}
-
-@font-face {
-    font-family: "Noto Serif SC";
-    src: url("/fonts/noto-serif-sc-bold.woff2") format("woff2");
-    font-style: normal;
-    font-weight: 700;
-    font-display: block;
-}
-
 html.fonts-loading body {
     visibility: hidden;
 }
 
 body {
-    font-family: "Monaspace Neon", "Noto Serif SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-monospace, monospace;
+    font-family: "Monaspace Neon", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
     margin: auto;
     padding: 20px;
     max-width: 78ch;
