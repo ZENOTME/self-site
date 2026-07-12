@@ -3,7 +3,7 @@ import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import subsetFont from 'subset-font';
 
-const fonts = [
+const notoFonts = [
 	{
 		source: 'NotoSerifSC-Regular.ttf',
 		url: 'https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7SCqyWv.ttf',
@@ -21,6 +21,11 @@ const licenseUrl = 'https://raw.githubusercontent.com/google/fonts/main/ofl/noto
 const rootDir = process.cwd();
 const cacheDir = path.join(rootDir, '.cache', 'noto-serif-sc', 'v35');
 const outputDir = path.join(rootDir, 'dist', 'fonts');
+const monaspaceSourcePath = path.join(rootDir, 'assets', 'fonts', 'monaspace-neon.woff2');
+const monaspaceFonts = [
+	{ weight: 400, output: 'monaspace-neon-regular.woff2' },
+	{ weight: 700, output: 'monaspace-neon-bold.woff2' },
+];
 
 function hash(buffer) {
 	return createHash('sha256').update(buffer).digest('hex');
@@ -74,12 +79,25 @@ async function collectRenderedText() {
 	return { characters, pageCount: htmlFiles.length };
 }
 
+async function buildMonaspaceSubsets(characters) {
+	const source = await readFile(monaspaceSourcePath);
+	for (const font of monaspaceFonts) {
+		const subset = await subsetFont(source, characters, {
+			targetFormat: 'woff2',
+			variationAxes: { wght: font.weight },
+		});
+		await writeFile(path.join(outputDir, font.output), subset);
+		console.log(`Generated ${font.output} (${Math.ceil(subset.length / 1024)} KB).`);
+	}
+}
+
 async function main() {
 	await mkdir(cacheDir, { recursive: true });
 	await mkdir(outputDir, { recursive: true });
 	const { characters, pageCount } = await collectRenderedText();
+	await buildMonaspaceSubsets(characters);
 
-	for (const font of fonts) {
+	for (const font of notoFonts) {
 		const sourcePath = await downloadSource(font);
 		const subset = await subsetFont(await readFile(sourcePath), characters, { targetFormat: 'woff2' });
 		await writeFile(path.join(outputDir, font.output), subset);
