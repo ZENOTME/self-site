@@ -99,7 +99,10 @@ function preserveBoldInlineCode(markdown: string): string {
   return markdown.replace(/\*\*(`[^`\n]+`)\*\*/g, "<strong>$1</strong>");
 }
 
-const n2m = new NotionToMarkdown({ notionClient: notion });
+const n2m = new NotionToMarkdown({
+  notionClient: notion,
+  config: { convertImagesToBase64: true },
+});
 n2m.setCustomTransformer("code", renderNotionCodeBlock);
 const publishedPostsCache = new Map<string, Promise<notion_blog_item[]>>();
 
